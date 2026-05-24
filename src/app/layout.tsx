@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nishant Kant Ojha — Azure AI Engineer",
-  description: "Portfolio of Nishant Kant Ojha, Azure AI Engineer based in Toronto, Ontario.",
+  title: "nishko",
+  description: "Portfolio of nishko, Azure AI Engineer based in Toronto, Ontario.",
   icons: {
     icon: "/favicon.png",
   },

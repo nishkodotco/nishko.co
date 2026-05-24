@@ -43,7 +43,7 @@ export default function BentoPortfolio() {
           <div className="w-full h-full rounded-xl overflow-hidden border border-[#E5E5E5]">
             <img
               src="/avatar.png"
-              alt="Nishant Kant Ojha"
+              alt="Nishko"
               className="w-full h-full object-cover object-center"
             />
           </div>
