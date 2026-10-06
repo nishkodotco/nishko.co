@@ -23,15 +23,12 @@ function Icon({ id }: { id: Social["id"] }) {
   );
 }
 
-// Round icons in the same grey as the profile photo's background.
-export function SocialLinks({ className, size = "default" }: { className?: string; size?: "default" | "sm" }) {
-  const circle = cn(
-    "inline-flex items-center justify-center rounded-full bg-[#d9d9d9] text-[#2b2b2b] transition-colors",
-    size === "sm" ? "size-8 [&_svg]:size-3.5" : "size-10",
-  );
+// Plain grey icons (no background), matching the greys of the profile photo.
+export function SocialLinks({ className }: { className?: string }) {
+  const icon = "inline-flex size-9 items-center justify-center text-[#8c8c8c] transition-colors [&_svg]:size-5";
 
   return (
-    <ul className={cn("flex items-center justify-center", size === "sm" ? "gap-2" : "gap-3", className)}>
+    <ul className={cn("flex items-center justify-center gap-2", className)}>
       {socials.map((social) => (
         <li key={social.id}>
           <Tooltip>
@@ -43,16 +40,16 @@ export function SocialLinks({ className, size = "default" }: { className?: strin
                     target="_blank"
                     rel="noreferrer"
                     aria-label={social.label}
-                    className={cn(circle, "hover:bg-[#2b2b2b] hover:text-[#d9d9d9]")}
+                    className={cn(icon, "hover:text-[#2b2b2b]")}
                   />
                 ) : (
-                  <span aria-label={`${social.label} (coming soon)`} className={cn(circle, "cursor-default opacity-60")} />
+                  <span aria-label={`${social.label} (coming soon)`} className={cn(icon, "cursor-default")} />
                 )
               }
             >
               <Icon id={social.id} />
             </TooltipTrigger>
-            <TooltipContent side={size === "sm" ? "top" : "bottom"}>{social.href ? social.label : `${social.label} — coming soon`}</TooltipContent>
+            <TooltipContent side="bottom">{social.href ? social.label : `${social.label} — coming soon`}</TooltipContent>
           </Tooltip>
         </li>
       ))}
