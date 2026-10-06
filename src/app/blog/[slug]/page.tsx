@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { formatDate, getPost, getPostHtml, getPosts, getToc } from "@/lib/blogs";
+import { ArrowLeft } from "lucide-react";
+import { IconLink } from "@/components/icon-link";
 import { TableOfContents } from "@/components/table-of-contents";
-
-// Shared look for the round icon buttons (back, PDF, ...).
-const iconButton =
-  "inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-cinnabar hover:text-cinnabar";
+import { Separator } from "@/components/ui/separator";
+import { formatDate, getPost, getPostHtml, getPosts, getToc } from "@/lib/blogs";
 
 // Only the posts in the blogs repo exist; anything else is a 404.
 export const dynamicParams = false;
@@ -38,35 +36,20 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
   // Other places to read this post. Add more sources here.
   const sources = [{ label: "Read as PDF", href: post.pdfUrl, icon: <PdfIcon /> }];
 
-  const sourceLinks = sources.map((source) => (
-    <a
-      key={source.href}
-      href={source.href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={source.label}
-      title={source.label}
-      className={iconButton}
-    >
-      {source.icon}
-    </a>
-  ));
+  const sourceLinks = (side: "left" | "right" | "top") =>
+    sources.map((source) => (
+      <IconLink key={source.href} href={source.href} label={source.label} side={side} external>
+        {source.icon}
+      </IconLink>
+    ));
 
   return (
     <article className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
-      <Link
-        href="/blog"
-        aria-label="All posts"
-        title="All posts"
-        className={iconButton}
-      >
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="M19 12H5" />
-          <path d="m12 19-7-7 7-7" />
-        </svg>
-      </Link>
+      <IconLink href="/blog" label="All posts" side="right">
+        <ArrowLeft className="size-4.5" />
+      </IconLink>
 
-      <header className="mt-8 border-b border-border pb-8">
+      <header className="mt-8 pb-8">
         <h1 className="text-4xl font-bold tracking-tight text-balance">{post.title}</h1>
         {post.summary && <p className="post-lede mt-4">{post.summary}</p>}
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
@@ -84,18 +67,20 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
             )}
           </p>
           <nav aria-label="Read elsewhere" className="flex items-center gap-2 md:hidden">
-            {sourceLinks}
+            {sourceLinks("top")}
           </nav>
         </div>
       </header>
 
+      <Separator />
+
       <div className="relative">
-        {/* Right-hand rail beside the text; stays in view while scrolling. */}
         {toc.length > 0 && <TableOfContents items={toc} />}
 
+        {/* Right-hand rail beside the text; stays in view while scrolling. */}
         <aside className="absolute left-full -top-[19px] hidden h-full pl-2 md:block">
           <nav aria-label="Read elsewhere" className="sticky top-8 flex flex-col gap-2">
-            {sourceLinks}
+            {sourceLinks("right")}
           </nav>
         </aside>
 
@@ -108,7 +93,7 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
 
 function PdfIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
       <path d="M14 2v6h6" />
       <text x="12" y="17.6" textAnchor="middle" fontSize="7" fontWeight="700" fill="currentColor" stroke="none" fontFamily="sans-serif">PDF</text>

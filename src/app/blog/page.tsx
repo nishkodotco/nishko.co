@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate, getPosts } from "@/lib/blogs";
 
 export default function BlogPage() {
@@ -12,23 +14,31 @@ export default function BlogPage() {
       </p>
 
       {posts.length === 0 ? (
-        <p className="mt-12 text-muted-foreground">No posts yet.</p>
+        <Card className="mt-12">
+          <CardHeader>
+            <CardTitle>No posts yet</CardTitle>
+            <CardDescription>New writing will show up here.</CardDescription>
+          </CardHeader>
+        </Card>
       ) : (
-        <ul className="mt-12 divide-y divide-border">
+        <div className="mt-12 flex flex-col gap-4">
           {posts.map((post) => (
-            <li key={post.slug}>
-              <Link href={`/blog/${post.slug}`} className="group block py-6">
-                <time dateTime={post.date} className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                  {formatDate(post.date)}
-                </time>
-                <h2 className="mt-1 text-xl font-semibold tracking-tight transition-colors group-hover:text-cinnabar">
-                  {post.title}
-                </h2>
-                {post.summary && <p className="mt-2 text-muted-foreground">{post.summary}</p>}
-              </Link>
-            </li>
+            <Link key={post.slug} href={`/blog/${post.slug}`} className="group rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
+              <Card className="transition-shadow group-hover:ring-cinnabar/40">
+                <CardHeader className="gap-2">
+                  <time dateTime={post.date} className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                    {formatDate(post.date)} · {post.readingMinutes} min read
+                  </time>
+                  <CardTitle className="flex items-start justify-between gap-4 text-xl font-semibold tracking-tight transition-colors group-hover:text-cinnabar">
+                    {post.title}
+                    <ArrowUpRight className="mt-1 size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-cinnabar" />
+                  </CardTitle>
+                  {post.summary && <CardDescription className="text-base">{post.summary}</CardDescription>}
+                </CardHeader>
+              </Card>
+            </Link>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
