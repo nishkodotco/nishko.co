@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
-import { SocialLinks } from "@/components/social-links";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
@@ -44,9 +43,8 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <footer>
             <Separator />
-            <div className="mx-auto flex max-w-2xl items-center justify-between gap-4 px-4 py-8 text-sm text-muted-foreground sm:px-6">
-              <span>© {new Date().getFullYear()} nishko</span>
-              <SocialLinks size="sm" />
+            <div className="mx-auto max-w-2xl px-4 py-8 text-sm text-muted-foreground sm:px-6">
+              © {new Date().getFullYear()} nishko
             </div>
           </footer>
         </TooltipProvider>
