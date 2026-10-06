@@ -49,17 +49,12 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
             </>
           )}
         </p>
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          {post.tags.map((tag) => (
-            <span key={tag} className="rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground">
-              {tag}
-            </span>
-          ))}
+        <div className="mt-4">
           <a
             href={post.pdfUrl}
             target="_blank"
             rel="noreferrer"
-            className="ml-auto rounded-full border border-border px-3 py-1 text-xs font-medium transition-colors hover:border-cinnabar hover:text-cinnabar"
+            className="inline-block rounded-full border border-border px-3 py-1 text-xs font-medium transition-colors hover:border-cinnabar hover:text-cinnabar"
           >
             Read as PDF ↗
           </a>

@@ -25,15 +25,6 @@ export default function BlogPage() {
                   {post.title}
                 </h2>
                 {post.summary && <p className="mt-2 text-muted-foreground">{post.summary}</p>}
-                {post.tags.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <span key={tag} className="rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
               </Link>
             </li>
           ))}
