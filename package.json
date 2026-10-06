@@ -8,7 +8,7 @@
     "dev": "next dev",
     "prebuild": "npm run fetch-blogs",
     "build": "next build && touch docs/.nojekyll",
-    "start": "npx serve@latest docs",
+    "start": "npm run build && npx serve@latest docs",
     "lint": "eslint"
   },
   "dependencies": {
