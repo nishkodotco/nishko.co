@@ -28,8 +28,30 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
   const post = getPost(slug);
   if (!post) notFound();
 
+  // Other places to read this post. Add more sources here.
+  const sources = [{ label: "Read as PDF", href: post.pdfUrl }];
+  const sourceLinks = sources.map((source) => (
+    <a
+      key={source.href}
+      href={source.href}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-block whitespace-nowrap rounded-full border border-border px-3 py-1 text-xs font-medium transition-colors hover:border-cinnabar hover:text-cinnabar"
+    >
+      {source.label} ↗
+    </a>
+  ));
+
   return (
-    <article className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
+    <article className="relative mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
+      {/* Right-hand rail on wide screens; stays in view while scrolling. */}
+      <aside className="absolute left-full top-0 hidden h-full pl-4 pt-16 xl:block">
+        <nav aria-label="Read elsewhere" className="sticky top-8 flex flex-col items-start gap-2">
+          <span className="mb-1 whitespace-nowrap text-xs uppercase tracking-wider text-muted-foreground">Read elsewhere</span>
+          {sourceLinks}
+        </nav>
+      </aside>
+
       <Link href="/blog" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
         ← All posts
       </Link>
@@ -49,16 +71,7 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
             </>
           )}
         </p>
-        <div className="mt-4">
-          <a
-            href={post.pdfUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-block rounded-full border border-border px-3 py-1 text-xs font-medium transition-colors hover:border-cinnabar hover:text-cinnabar"
-          >
-            Read as PDF ↗
-          </a>
-        </div>
+        <div className="mt-4 flex flex-wrap gap-2 xl:hidden">{sourceLinks}</div>
       </header>
 
       {post.summary && <p className="post-lede mt-8">{post.summary}</p>}
