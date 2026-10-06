@@ -67,6 +67,23 @@ export function getPostHtml(post: Post): string {
   return html.match(BODY)?.[1] ?? "";
 }
 
+export type TocItem = { id: string; text: string; level: 2 | 3 };
+
+// \section → h2, \subsection → h3 (pandoc gives each an id).
+export function getToc(html: string): TocItem[] {
+  return [...html.matchAll(/<h([23]) id="([^"]+)"[^>]*>([\s\S]*?)<\/h\1>/g)].map((m) => ({
+    level: Number(m[1]) as 2 | 3,
+    id: m[2],
+    text: decode(
+      m[3]
+        .replace(/<annotation[\s\S]*?<\/annotation>/g, "")
+        .replace(/<[^>]+>/g, "")
+        .replace(/\s+/g, " ")
+        .trim(),
+    ),
+  }));
+}
+
 export function formatDate(iso: string): string {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
     year: "numeric",
