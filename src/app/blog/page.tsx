@@ -1,54 +1,44 @@
-import React from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { formatDate, getPosts } from "@/lib/blogs";
 
 export default function BlogPage() {
+  const posts = getPosts();
+
   return (
-    <div className="p-4 sm:p-8 lg:p-12 font-sans">
-      <div className="max-w-4xl mx-auto space-y-8">
-        
-        <div className="space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight">Blog</h1>
-          <p className="text-muted-foreground text-lg">Thoughts, tutorials, and deep-dives into Azure and Cloud Engineering.</p>
-        </div>
+    <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
+      <h1 className="text-4xl font-bold tracking-tight">Blog</h1>
+      <p className="mt-2 text-lg text-muted-foreground">
+        Thoughts, notes, and things I&apos;m learning.
+      </p>
 
-        <div className="grid grid-cols-1 gap-6 mt-8">
-          {/* Placeholder Article 1 */}
-          <Card className="hover:border-primary/50 transition-colors shadow-sm border-[#E5E5E5] cursor-pointer">
-            <CardHeader>
-              <div className="flex justify-between items-start gap-4">
-                <CardTitle className="text-xl">Architecting a GPT-4 RAG Pipeline on Azure</CardTitle>
-                <span className="text-sm text-muted-foreground whitespace-nowrap">Oct 12, 2024</span>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-zinc-700">A comprehensive guide on deploying a secure, enterprise-grade Retrieval-Augmented Generation pipeline using Azure OpenAI, Cognitive Search, and private endpoints.</p>
-              <div className="flex gap-2">
-                <Badge variant="secondary">Azure OpenAI</Badge>
-                <Badge variant="secondary">Architecture</Badge>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Placeholder Article 2 */}
-          <Card className="hover:border-primary/50 transition-colors shadow-sm border-[#E5E5E5] cursor-pointer">
-            <CardHeader>
-              <div className="flex justify-between items-start gap-4">
-                <CardTitle className="text-xl">Terraform Best Practices for Production Environments</CardTitle>
-                <span className="text-sm text-muted-foreground whitespace-nowrap">Aug 05, 2024</span>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-zinc-700">How to structure your Terraform modules, manage state securely, and automate deployments using Azure DevOps pipelines.</p>
-              <div className="flex gap-2">
-                <Badge variant="secondary">Terraform</Badge>
-                <Badge variant="secondary">DevOps</Badge>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-      </div>
+      {posts.length === 0 ? (
+        <p className="mt-12 text-muted-foreground">No posts yet.</p>
+      ) : (
+        <ul className="mt-12 divide-y divide-border">
+          {posts.map((post) => (
+            <li key={post.slug}>
+              <Link href={`/blog/${post.slug}`} className="group block py-6">
+                <time dateTime={post.date} className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  {formatDate(post.date)}
+                </time>
+                <h2 className="mt-1 text-xl font-semibold tracking-tight transition-colors group-hover:text-cinnabar">
+                  {post.title}
+                </h2>
+                {post.summary && <p className="mt-2 text-muted-foreground">{post.summary}</p>}
+                {post.tags.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {post.tags.map((tag) => (
+                      <span key={tag} className="rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

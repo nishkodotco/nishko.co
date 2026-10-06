@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
+import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,12 +13,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "nishko",
-  description: "Portfolio of nishko, Azure AI Engineer based in Toronto, Ontario.",
-  icons: {
-    icon: "/favicon.png",
+  metadataBase: new URL("https://nishko.co"),
+  title: {
+    default: "nishko — blog",
+    template: "%s — nishko",
   },
+  description: "Writing by Nishant Kant Ojha.",
 };
 
 export default function RootLayout({
@@ -28,12 +35,27 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <main className="flex-1">
-          {children}
-        </main>
+        <header className="border-b border-border">
+          <div className="mx-auto flex h-16 max-w-2xl items-center justify-between px-4 sm:px-6">
+            <Link href="/" className="text-xl font-bold tracking-widest">
+              nishko
+            </Link>
+            <nav className="text-sm font-medium text-muted-foreground">
+              <Link href="/blog" className="transition-colors hover:text-foreground">
+                Blog
+              </Link>
+            </nav>
+          </div>
+        </header>
+        <main className="flex-1">{children}</main>
+        <footer className="border-t border-border">
+          <div className="mx-auto max-w-2xl px-4 py-8 text-sm text-muted-foreground sm:px-6">
+            © {new Date().getFullYear()} Nishant Kant Ojha
+          </div>
+        </footer>
       </body>
     </html>
   );

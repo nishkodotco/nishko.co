@@ -1,121 +1,93 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-
-@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-cinnabar: var(--cinnabar);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-cinnabar: #F97316;
-  --radius-sm: var(--radius);
-  --radius-md: var(--radius);
-  --radius-lg: var(--radius);
-  --radius-xl: var(--radius);
-  --radius-2xl: var(--radius);
-  --radius-3xl: var(--radius);
-  --radius-4xl: var(--radius);
+  --font-serif: var(--font-source-serif);
 }
 
 :root {
   --background: #ffffff;
   --foreground: #1a1a1a;
-  --card: #ffffff;
-  --card-foreground: #1a1a1a;
-  --popover: #ffffff;
-  --popover-foreground: #1a1a1a;
-  --primary: #1a1a1a;
-  --primary-foreground: #ffffff;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #1a1a1a;
   --muted: #f5f5f5;
   --muted-foreground: #737373;
-  --accent: #f5f5f5;
-  --accent-foreground: #1a1a1a;
-  --destructive: #ef4444;
   --border: #e5e5e5;
-  --input: #e5e5e5;
-  --ring: #e5e5e5;
-  --radius: 1.05rem;
-  /* Orange gradient accent from logo */
-  --accent-orange-from: #FF6B00;
-  --accent-orange-to: #FFAA00;
+  --cinnabar: #f97316;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f0f0f;
+    --foreground: #ededed;
+    --muted: #1f1f1f;
+    --muted-foreground: #a3a3a3;
+    --border: #2a2a2a;
+    --cinnabar: #fb923c;
+  }
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  html {
+    @apply font-sans;
   }
   body {
     @apply bg-background text-foreground;
   }
-  html {
-    @apply font-sans;
+}
+
+/* ---- Blog post body (HTML from pandoc) -------------------------------- */
+
+.post-lede {
+  @apply font-serif text-xl italic leading-relaxed text-muted-foreground;
+}
+
+.post-body {
+  @apply font-serif text-lg leading-[1.8];
+
+  & > * + * { @apply mt-6; }
+
+  & h2 { @apply mt-12 font-sans text-2xl font-semibold tracking-tight; }
+  & h3 { @apply mt-10 font-sans text-xl font-semibold tracking-tight; }
+  & h4 { @apply mt-8 font-sans text-lg font-semibold; }
+
+  & a { @apply text-cinnabar underline underline-offset-4 hover:no-underline; }
+
+  & ul { @apply list-disc pl-6; }
+  & ol { @apply list-decimal pl-6; }
+  & li + li { @apply mt-2; }
+  & li > p + p { @apply mt-2; }
+
+  & blockquote { @apply border-l-2 border-cinnabar pl-5 italic text-muted-foreground; }
+
+  & code { @apply rounded bg-muted px-1.5 py-0.5 font-mono text-[0.85em]; }
+  & pre { @apply overflow-x-auto rounded-lg bg-muted p-4 font-mono text-sm leading-relaxed; }
+  & pre code { @apply bg-transparent p-0; }
+
+  & hr { @apply border-border; }
+
+  & img { @apply mx-auto h-auto max-w-full rounded-lg; }
+  & figure { @apply text-center; }
+  & figcaption { @apply mt-2 font-sans text-sm text-muted-foreground; }
+
+  & table { @apply w-full border-collapse font-sans text-base; }
+  & th, & td { @apply border-b border-border px-3 py-2 text-left; }
+
+  /* Maths (MathML) */
+  & math[display="block"] { display: block math; @apply my-6 overflow-x-auto overflow-y-hidden py-1; }
+
+  /* \begin{theorem}, \begin{definition}, \begin{proof}, ... */
+  & :is(.theorem, .lemma, .proposition, .corollary, .definition, .example, .remark) {
+    @apply rounded-r-lg border-l-2 border-cinnabar bg-muted px-5 py-4;
   }
+  & .proof { @apply border-l-2 border-border pl-5; }
+
+  /* Footnotes */
+  & .footnotes { @apply mt-12 border-t border-border pt-6 text-base text-muted-foreground; }
+  & .footnote-ref { @apply no-underline; }
 }

@@ -3,10 +3,17 @@ name: Deploy Next.js site to GitHub Pages
 on:
   push:
     branches: ["main"]
+  # Fired by github.com/nishkodotco/blogs whenever a post is published or updated.
+  repository_dispatch:
+    types: [blogs-updated]
   workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -14,19 +21,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: npm
-          
+
       - name: Install dependencies
         run: npm ci
-        
-      - name: Build Next.js
+
+      - name: Build Next.js (fetches latest posts from the blogs repo)
         run: npm run build
-        
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

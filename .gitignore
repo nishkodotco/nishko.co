@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# static export output (deployed to the gh-pages branch by CI)
+/docs/
+
+# posts fetched from github.com/nishkodotco/blogs at build time
+/content/
