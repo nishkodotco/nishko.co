@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
 import { formatDate, getPosts } from "@/lib/blogs";
 
 export default function BlogPage() {
@@ -8,37 +8,34 @@ export default function BlogPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
-      <h1 className="text-4xl font-bold tracking-tight">Blog</h1>
-      <p className="mt-2 text-lg text-muted-foreground">
-        Thoughts, notes, and things I&apos;m learning.
-      </p>
+      <Link href="/" aria-label="Nishant Kant Ojha — home" className="mx-auto block w-fit rounded-full">
+        <Avatar className="size-28 sm:size-32">
+          <AvatarImage src="/avatar.jpg" alt="Nishant Kant Ojha" />
+          <AvatarFallback className="text-2xl">NK</AvatarFallback>
+        </Avatar>
+      </Link>
+
+      <Separator className="mt-12" />
 
       {posts.length === 0 ? (
-        <Card className="mt-12">
-          <CardHeader>
-            <CardTitle>No posts yet</CardTitle>
-            <CardDescription>New writing will show up here.</CardDescription>
-          </CardHeader>
-        </Card>
+        <p className="py-10 text-center text-muted-foreground">No posts yet.</p>
       ) : (
-        <div className="mt-12 flex flex-col gap-4">
+        <ul>
           {posts.map((post) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="group rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
-              <Card className="transition-shadow group-hover:ring-cinnabar/40">
-                <CardHeader className="gap-2">
-                  <time dateTime={post.date} className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                    {formatDate(post.date)} · {post.readingMinutes} min read
-                  </time>
-                  <CardTitle className="flex items-start justify-between gap-4 text-xl font-semibold tracking-tight transition-colors group-hover:text-cinnabar">
-                    {post.title}
-                    <ArrowUpRight className="mt-1 size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-cinnabar" />
-                  </CardTitle>
-                  {post.summary && <CardDescription className="text-base">{post.summary}</CardDescription>}
-                </CardHeader>
-              </Card>
-            </Link>
+            <li key={post.slug}>
+              <Link href={`/blog/${post.slug}`} className="group block py-8">
+                <time dateTime={post.date} className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  {formatDate(post.date)} · {post.readingMinutes} min read
+                </time>
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight transition-colors group-hover:text-cinnabar">
+                  {post.title}
+                </h2>
+                {post.summary && <p className="post-lede mt-2 text-lg">{post.summary}</p>}
+              </Link>
+              <Separator />
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );

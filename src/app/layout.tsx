@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
-import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
@@ -42,19 +40,6 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <TooltipProvider>
-          <header>
-            <div className="mx-auto flex h-16 max-w-2xl items-center justify-between px-4 sm:px-6">
-              <Link href="/" className="text-xl font-bold tracking-widest">
-                nishko
-              </Link>
-              <nav>
-                <Link href="/blog" className={buttonVariants({ variant: "ghost" })}>
-                  Blog
-                </Link>
-              </nav>
-            </div>
-            <Separator />
-          </header>
           <main className="flex-1">{children}</main>
           <footer>
             <Separator />
