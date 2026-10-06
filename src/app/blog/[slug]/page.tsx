@@ -3,6 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatDate, getPost, getPostHtml, getPosts } from "@/lib/blogs";
 
+// Shared look for the round icon buttons (back, PDF, ...).
+const iconButton =
+  "inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-cinnabar hover:text-cinnabar";
+
 // Only the posts in the blogs repo exist; anything else is a 404.
 export const dynamicParams = false;
 
@@ -39,7 +43,7 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
       rel="noreferrer"
       aria-label={source.label}
       title={source.label}
-      className="rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-cinnabar"
+      className={iconButton}
     >
       {source.icon}
     </a>
@@ -51,7 +55,7 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
         href="/blog"
         aria-label="All posts"
         title="All posts"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-cinnabar hover:text-cinnabar"
+        className={iconButton}
       >
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M19 12H5" />
@@ -76,7 +80,7 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
               </>
             )}
           </p>
-          <nav aria-label="Read elsewhere" className="flex items-center gap-1 md:hidden">
+          <nav aria-label="Read elsewhere" className="flex items-center gap-2 md:hidden">
             {sourceLinks}
           </nav>
         </div>
@@ -85,7 +89,7 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
       <div className="relative">
         {/* Right-hand rail beside the text; stays in view while scrolling. */}
         <aside className="absolute left-full -top-[19px] hidden h-full pl-2 md:block">
-          <nav aria-label="Read elsewhere" className="sticky top-8 flex flex-col gap-1">
+          <nav aria-label="Read elsewhere" className="sticky top-8 flex flex-col gap-2">
             {sourceLinks}
           </nav>
         </aside>
@@ -102,7 +106,7 @@ function PdfIcon() {
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
       <path d="M14 2v6h6" />
-      <text x="12" y="17.5" textAnchor="middle" fontSize="6" fontWeight="700" fill="currentColor" stroke="none" fontFamily="sans-serif">PDF</text>
+      <text x="12" y="17.6" textAnchor="middle" fontSize="7" fontWeight="700" fill="currentColor" stroke="none" fontFamily="sans-serif">PDF</text>
     </svg>
   );
 }
