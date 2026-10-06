@@ -24,8 +24,8 @@ const sourceSerif = Source_Serif_4({
 export const metadata: Metadata = {
   metadataBase: new URL("https://nishko.co"),
   title: {
-    default: "nishko — blog",
-    template: "%s — nishko",
+    default: "nishant | blog",
+    template: "%s | nishant",
   },
   description: "Writing by Nishant Kant Ojha.",
 };
