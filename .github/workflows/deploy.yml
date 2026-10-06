@@ -1,22 +1,27 @@
 name: Deploy Next.js site to GitHub Pages
 
+# Builds the site and uploads it straight to GitHub Pages (Settings → Pages →
+# Source: GitHub Actions). The compiled site is never committed to any branch.
+
 on:
   push:
     branches: ["main"]
-  # Fired by github.com/nishkodotco/blogs whenever a post is published or updated.
+  # Fired by blogs-latex's publish workflow whenever a post is published or updated.
   repository_dispatch:
     types: [blogs-updated]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: deploy-pages
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,9 +39,18 @@ jobs:
       - name: Build Next.js (fetches latest posts from the blogs repo)
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
-          publish_branch: gh-pages
+          path: ./docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
