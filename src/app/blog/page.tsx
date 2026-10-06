@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { SocialLinks } from "@/components/social-links";
 import { formatDate, getPosts } from "@/lib/blogs";
 
 export default function BlogPage() {
@@ -15,7 +16,9 @@ export default function BlogPage() {
         </Avatar>
       </Link>
 
-      <Separator className="mt-12" />
+      <SocialLinks className="mt-6" />
+
+      <Separator className="mt-10" />
 
       {posts.length === 0 ? (
         <p className="py-10 text-center text-muted-foreground">No posts yet.</p>
