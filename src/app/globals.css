@@ -45,12 +45,17 @@
 
 .post-lede {
   @apply font-serif text-xl italic leading-relaxed text-muted-foreground;
+  text-align: justify;
+  hyphens: auto;
 }
 
 .post-body {
   @apply font-serif text-lg leading-[1.8];
 
   & > * + * { @apply mt-6; }
+
+  /* Justified paragraphs, with hyphenation so word spacing stays even. */
+  & p, & li { text-align: justify; hyphens: auto; }
 
   & h2 { @apply mt-12 font-sans text-2xl font-semibold tracking-tight; }
   & h3 { @apply mt-10 font-sans text-xl font-semibold tracking-tight; }
