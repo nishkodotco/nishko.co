@@ -76,7 +76,7 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
 
       <div className="relative">
         {/* Right-hand rail beside the text; stays in view while scrolling. */}
-        <aside className="absolute left-full top-0 hidden h-full pl-2 pt-6 md:block">
+        <aside className="absolute left-full -top-[19px] hidden h-full pl-2 md:block">
           <nav aria-label="Read elsewhere" className="sticky top-8 flex flex-col gap-1">
             {sourceLinks}
           </nav>
