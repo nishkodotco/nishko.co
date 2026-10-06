@@ -25,10 +25,10 @@ function Icon({ id }: { id: Social["id"] }) {
 
 // Plain grey icons (no background), matching the greys of the profile photo.
 export function SocialLinks({ className }: { className?: string }) {
-  const icon = "inline-flex size-9 items-center justify-center text-[#8c8c8c] transition-colors [&_svg]:size-5";
+  const icon = "inline-flex size-12 items-center justify-center text-[#8c8c8c] transition-colors [&_svg]:size-6";
 
   return (
-    <ul className={cn("flex items-center justify-center gap-2", className)}>
+    <ul className={cn("flex items-center justify-center gap-3", className)}>
       {socials.map((social) => (
         <li key={social.id}>
           <Tooltip>
