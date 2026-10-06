@@ -47,8 +47,16 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
 
   return (
     <article className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
-      <Link href="/blog" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-        ← All posts
+      <Link
+        href="/blog"
+        aria-label="All posts"
+        title="All posts"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-cinnabar hover:text-cinnabar"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M19 12H5" />
+          <path d="m12 19-7-7 7-7" />
+        </svg>
       </Link>
 
       <header className="mt-8 border-b border-border pb-8">
